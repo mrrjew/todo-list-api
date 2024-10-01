@@ -23,13 +23,13 @@ export class AuthController {
   }
 
   @Post('register')
-  @UseGuards(LocalGuard)
   async HandleRegister(@Body() details, @Req() req:Request){
     const user = await this.authService.register(details)
     console.log(user)
 
     req.login(user, (err) => {
-      throw new BadRequestException()
+      console.log(err)
+      throw new BadRequestException(err)
     })
 
     return user
